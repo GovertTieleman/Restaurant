@@ -5,42 +5,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CategoriesActivity extends AppCompatActivity implements CategoriesRequest.Callback {
+public class MenuActivity extends AppCompatActivity implements MenuItemRequest.Callback{
     private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_menu);
         // get ListView
         lv = (ListView) findViewById(R.id.categories);
 
+        // get requested category
+        String category = (String) getIntent().getStringExtra("selected_category");
+
         // request categories
-        CategoriesRequest x = new CategoriesRequest(this);
-        x.getCategories(this);
+        MenuItemRequest x = new MenuItemRequest(this);
+        x.getMenuItems(this, category);
 
         // set listener
         lv.setOnItemClickListener(new ListItemClickListener());
     }
 
     @Override
-    public void gotCategories(ArrayList<String> categories) {
+    public void gotMenuItems(ArrayList<MenuItem> menuItems) {
         // make adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, categories);
+        MenuItemAdapter adapter = new MenuItemAdapter(this, 0, menuItems);
 
         //set adapter
         lv.setAdapter(adapter);
     }
 
     @Override
-    public void gotCategoriesError(String message) {
+    public void gotMenuItemsError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
@@ -48,11 +49,11 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // get category
-            String category = (String) parent.getItemAtPosition(position).toString();
+            MenuItem item = (MenuItem) parent.getItemAtPosition(position);
 
             // make intent
-            Intent intent = new Intent(CategoriesActivity.this, MenuActivity.class);
-            intent.putExtra("selected_category", category);
+            Intent intent = new Intent(MenuActivity.this, DetailActivity.class);
+            intent.putExtra("selected_item", item);
 
             // start MenuActivity with intent
             startActivity(intent);
