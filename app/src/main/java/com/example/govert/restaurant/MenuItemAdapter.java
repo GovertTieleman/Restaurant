@@ -42,7 +42,7 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
 
         // set price for item
         TextView price = (TextView) listItem.findViewById(R.id.textView_price);
-        String priceString = "€ " + currentItem.getPrice();
+        String priceString = "€ " + currentItem.getPrice() + "0";
         price.setText(priceString);
 
         return listItem;
