@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // set price for item
         TextView price = (TextView) findViewById(R.id.textView_price);
-        String priceString = "Price: € " + currentItem.getPrice();
+        String priceString = "Price: € " + currentItem.getPrice() + "0";
         price.setText(priceString);
     }
 }

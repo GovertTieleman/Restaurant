@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity implements MenuItemRequest.Callback{
+public class MenuActivity extends AppCompatActivity implements MenuItemRequest.Callback {
     private ListView lv;
 
     @Override

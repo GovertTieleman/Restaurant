@@ -18,6 +18,11 @@ public class MenuItemRequest implements Response.Listener<JSONObject>, Response.
     private Context context;
     private Callback activity;
 
+    public interface Callback {
+        void gotMenuItems(ArrayList<MenuItem> menuItems);
+        void gotMenuItemsError(String message);
+    }
+
     public MenuItemRequest(Context context) {
         this.context = context;
     }
@@ -31,9 +36,7 @@ public class MenuItemRequest implements Response.Listener<JSONObject>, Response.
 
         // create JSONObjectRequest
         String url = "https://resto.mprog.nl/menu?category=" + category;
-        JsonObjectRequest jsonObjectRequest = new
-                JsonObjectRequest(url, null, this, this);
-        queue.add(jsonObjectRequest);
+        queue.add(new JsonObjectRequest(url, null, this, this));
     }
 
     @Override
@@ -73,10 +76,5 @@ public class MenuItemRequest implements Response.Listener<JSONObject>, Response.
         catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public interface Callback {
-        void gotMenuItems(ArrayList<MenuItem> menuItems);
-        void gotMenuItemsError(String message);
     }
 }

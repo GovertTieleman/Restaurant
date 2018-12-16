@@ -18,6 +18,11 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
     private Context context;
     private Callback activity;
 
+    public interface Callback {
+        void gotCategories(ArrayList<String> categories);
+        void gotCategoriesError(String message);
+    }
+
     public CategoriesRequest(Context context) {
         this.context = context;
     }
@@ -59,10 +64,5 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public interface Callback {
-        void gotCategories(ArrayList<String> categories);
-        void gotCategoriesError(String message);
     }
 }
